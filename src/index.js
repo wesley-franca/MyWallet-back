@@ -123,11 +123,42 @@ server.post("/movimentation", async (req, res) => {
 			console.log(error);
 			return res.sendStatus(500);
 		}
-		if(section.token === token) {
+		if (section !== null) {
+			if (section.token === token) {
+				try {
+					body.time = time;
+					await db.collection("movimentation").insertOne({ body, userId: `ObjectId(${userId})` })
+					return res.sendStatus(201);
+				} catch (error) {
+					console.log(error);
+					return res.sendStatus(500);
+				}
+			} else {
+				return res.sendStatus(401);
+			}
+		} else {
+			return res.sendStatus(404)
+		}
+	}
+})
+
+server.get("/movimentation", async (req, res) => {
+	let section;
+	let movimentationsArray;
+	const userId = req.headers.user;
+	const token = req.headers.authorization.replace("Bearer ", "");
+	try {
+		section = await db.collection("sections").findOne({ userId: `ObjectId(${userId})` });
+	} catch (error) {
+		console.log(error);
+		return res.sendStatus(500);
+	}
+	if (section !== null) {
+		if (section.token === token) {
 			try {
-				body.time = time;
-				await db.collection("movimentation").insertOne({ body, userId: `ObjectId(${userId})` })
-				return res.sendStatus(201);
+				movimentationsArray = await db.collection("movimentation").find({ userId: `ObjectId(${userId})` }).toArray();
+				console.log(movimentationsArray)
+				return res.status(200).send(movimentationsArray);
 			} catch (error) {
 				console.log(error);
 				return res.sendStatus(500);
@@ -135,9 +166,10 @@ server.post("/movimentation", async (req, res) => {
 		} else {
 			return res.sendStatus(401);
 		}
-		
 	}
+
 })
+
 
 
 server.listen(5000, () => { console.log("listen on 5000") });
