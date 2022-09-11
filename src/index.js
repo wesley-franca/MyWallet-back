@@ -66,6 +66,7 @@ server.post("/login", async (req, res) => {
 	const { email, password } = req.body;
 	let authentication = false;
 	let registeredUser;
+	let username;
 	const user = {
 		email: stripHtml(email).result,
 		password: stripHtml(password).result
@@ -81,6 +82,7 @@ server.post("/login", async (req, res) => {
 				return res.status(403).send("email ou senha estão incorretos");
 			} else {
 				authentication = bcrypt.compareSync(user.password, registeredUser.password);
+				username = registeredUser.name;
 			}
 		} catch (error) {
 			console.log(error.message);
@@ -100,7 +102,8 @@ server.post("/login", async (req, res) => {
 				console.log(error.message);
 				return res.sendStatus(500);
 			}
-			return res.status(200).send({ token, _id });
+			console.log(username)
+			return res.status(200).send({ token, _id, username });
 		} else {
 			return res.status(403).send("email ou senha estão incorretos");
 		}
