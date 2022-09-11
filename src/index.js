@@ -137,7 +137,7 @@ server.post("/movimentation", async (req, res) => {
 				return res.sendStatus(401);
 			}
 		} else {
-			return res.sendStatus(404)
+			return res.sendStatus(404);
 		}
 	}
 })
@@ -157,7 +157,6 @@ server.get("/movimentation", async (req, res) => {
 		if (section.token === token) {
 			try {
 				movimentationsArray = await db.collection("movimentation").find({ userId: `ObjectId(${userId})` }).toArray();
-				console.log(movimentationsArray)
 				return res.status(200).send(movimentationsArray);
 			} catch (error) {
 				console.log(error);
@@ -166,10 +165,31 @@ server.get("/movimentation", async (req, res) => {
 		} else {
 			return res.sendStatus(401);
 		}
+	} else{
+		return res.sendStatus(404);
 	}
-
 })
 
-
+server.delete("/logout", async (req, res) => {
+	let section;
+	const userId = req.headers.user;
+	try {
+		section = await db.collection("sections").findOne({ userId: `ObjectId(${userId})` });
+	} catch (error) {
+		console.log(error);
+		return res.sendStatus(500);
+	}
+	if (section !== null) {
+			try {
+				await db.collection("sections").deleteOne({ userId: `ObjectId(${userId})` });
+				res.sendStatus(200);
+			} catch (error) {
+				console.log(error);
+				return res.sendStatus(500);
+			}
+	} else{
+		return res.sendStatus(404);
+	}
+})
 
 server.listen(5000, () => { console.log("listen on 5000") });
