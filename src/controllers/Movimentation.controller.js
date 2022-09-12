@@ -73,4 +73,4 @@ const listMovimentations = async (req, res) => {
     }
 };
 
-export { createMovimentation, listMovimentations }
+export { createMovimentation, listMovimentations };
