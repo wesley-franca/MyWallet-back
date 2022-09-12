@@ -9,5 +9,6 @@ router.use(hasUser)
 
 router.post("/movimentation", movimentationController.createMovimentation);
 router.get("/movimentation", movimentationController.listMovimentations);
+router.delete("/movimentation", movimentationController.deleteMovimentation);
 
 export default router;

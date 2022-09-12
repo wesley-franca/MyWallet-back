@@ -1,6 +1,7 @@
 import db from "../database/Mongo.js";
 import joi from "joi";
 import dayjs from "dayjs";
+import {ObjectId} from "mongodb";
 
 const time = dayjs(new Date()).format("DD/MM");
 const movimentationSchema = joi.object({
@@ -72,4 +73,35 @@ const listMovimentations = async (req, res) => {
     }
 };
 
-export { createMovimentation, listMovimentations };
+const deleteMovimentation = async (req, res) => {
+    let section;
+    const userId = req.headers.user;
+    const token = req.headers.authorization.replace("Bearer ", "");
+    const movimentationId = req.headers.movimentationid;
+    try {
+        section = await db.collection("sections").findOne({ userId: `ObjectId(${userId})` });
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+    if (section !== null) {
+        if (section.token === token) {
+            try {
+                // console.log({_id : `ObjectId("${movimentationId}")`})
+                // console.log({_id : `ObjectId(631f7ab6d106e3c3fb0294b6)`})
+
+                await db.collection("movimentation").deleteOne({ _id : ObjectId(movimentationId) });
+                return res.sendStatus(200);
+            } catch (error) {
+                console.log(error);
+                return res.sendStatus(500);
+            }
+        } else {
+            return res.sendStatus(401);
+        }
+    } else {
+        return res.sendStatus(404);
+    }
+};
+
+export { createMovimentation, listMovimentations, deleteMovimentation };
