@@ -9,7 +9,6 @@ const movimentationSchema = joi.object({
     description: joi.string().min(2).max(30).required().trim()
 });
 
-
 const createMovimentation = async (req, res) => {
     let section;
     const body = req.body;
