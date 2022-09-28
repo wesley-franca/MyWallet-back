@@ -5,10 +5,10 @@ import hasUser from "../middlewares/User.middleware.js";
 
 const router = express.Router();
 
-router.use(hasUser)
+// router.use()
 
 router.post("/movimentation", movimentationController.createMovimentation);
 router.get("/movimentation", movimentationController.listMovimentations);
-router.delete("/movimentation", movimentationController.deleteMovimentation);
+router.delete("/movimentation", hasUser, movimentationController.deleteMovimentation);
 
 export default router;
