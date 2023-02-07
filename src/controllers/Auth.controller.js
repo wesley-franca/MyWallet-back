@@ -1,8 +1,8 @@
-import db from "../database/Mongo.js";
 import { stripHtml } from "string-strip-html";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
-import { newUserSchema, userSchema } from "../schemas/authSchemas"
+import db from "../database/Mongo.js";
+import { newUserSchema, userSchema } from "../schemas/authSchemas.js";
 
 const registration = async (req, res) => {
 	let user;

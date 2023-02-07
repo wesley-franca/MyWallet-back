@@ -1,7 +1,6 @@
-import db from "../database/Mongo.js";
-import joi from "joi";
 import dayjs from "dayjs";
 import { ObjectId } from "mongodb";
+import db from "../database/Mongo.js";
 import { movimentationSchema } from "../schemas/movimentationSchemas.js";
 
 const time = dayjs(new Date()).format("DD/MM");
