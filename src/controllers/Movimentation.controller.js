@@ -1,14 +1,10 @@
 import db from "../database/Mongo.js";
 import joi from "joi";
 import dayjs from "dayjs";
-import {ObjectId} from "mongodb";
+import { ObjectId } from "mongodb";
+import { movimentationSchema } from "../schemas/movimentationSchemas.js";
 
 const time = dayjs(new Date()).format("DD/MM");
-const movimentationSchema = joi.object({
-    type: joi.string().required().valid("Entrada", "Saida").trim(),
-    value: joi.number().required(),
-    description: joi.string().min(2).max(30).required().trim()
-});
 
 const createMovimentation = async (req, res) => {
     let section;
@@ -87,7 +83,7 @@ const deleteMovimentation = async (req, res) => {
     if (section !== null) {
         if (section.token === token) {
             try {
-                await db.collection("movimentation").deleteOne({ _id : ObjectId(movimentationId) });
+                await db.collection("movimentation").deleteOne({ _id: ObjectId(movimentationId) });
                 return res.sendStatus(200);
             } catch (error) {
                 console.log(error);
