@@ -1,11 +1,10 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-
 import authRouter from "./routers/Auth.routes.js";
 import movimentatioRouter from "./routers/Movimentation.routes.js";
 
-dotenv.config(); 
+dotenv.config();
 const server = express();
 
 server.use(express.json());
