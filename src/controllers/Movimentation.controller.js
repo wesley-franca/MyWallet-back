@@ -87,9 +87,6 @@ const deleteMovimentation = async (req, res) => {
     if (section !== null) {
         if (section.token === token) {
             try {
-                // console.log({_id : `ObjectId("${movimentationId}")`})
-                // console.log({_id : `ObjectId(631f7ab6d106e3c3fb0294b6)`})
-
                 await db.collection("movimentation").deleteOne({ _id : ObjectId(movimentationId) });
                 return res.sendStatus(200);
             } catch (error) {

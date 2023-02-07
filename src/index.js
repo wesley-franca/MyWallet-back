@@ -11,6 +11,10 @@ const server = express();
 server.use(express.json());
 server.use(cors());
 
+server.get("/", (req, res) => {
+  return res.sendStatus(200);
+});
+
 server.use(authRouter);
 server.use(movimentatioRouter);
 
