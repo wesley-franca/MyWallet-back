@@ -3,7 +3,6 @@
 <h1>MyWallet is an application made to track your finances.
 
 <h1>It was my first full stack application, where I developed both the front-end and back-end from scratch using React.js, styledComponents, NodeJs, express, and other technologies and tools</h1>
-<h1>It was amazing to me when I saw my app deployed and working as a real website that people would actually use</h1>
   
 !![image](https://user-images.githubusercontent.com/106840825/217320351-316ed40b-e03d-4515-97f1-95814ea25027.png)
 ![image](https://user-images.githubusercontent.com/106840825/217320376-38af1dc9-04de-495c-8ad6-2bced2472ab9.png)
